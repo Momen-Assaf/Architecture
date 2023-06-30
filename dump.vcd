@@ -1,0 +1,229 @@
+$date
+	Fri Jun 30 09:57:56 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module Mux2to1 $end
+$var wire 32 ! in0 [31:0] $end
+$var wire 32 " in1 [31:0] $end
+$var wire 1 # sel $end
+$var reg 32 $ out [31:0] $end
+$upscope $end
+$scope module Mux4to1 $end
+$var wire 32 % in0 [31:0] $end
+$var wire 32 & in1 [31:0] $end
+$var wire 32 ' in2 [31:0] $end
+$var wire 32 ( in3 [31:0] $end
+$var wire 2 ) sel [1:0] $end
+$var reg 32 * out [31:0] $end
+$upscope $end
+$scope module TB $end
+$var wire 32 + PC_Next [31:0] $end
+$var wire 32 , Instruction [31:0] $end
+$var reg 32 - Address [31:0] $end
+$var reg 2 . PC_Src [1:0] $end
+$var reg 32 / branchAddress [31:0] $end
+$var reg 1 0 clk $end
+$var reg 32 1 jumpAddress [31:0] $end
+$var reg 1 2 rst $end
+$scope module test $end
+$var wire 2 3 PC_Src [1:0] $end
+$var wire 32 4 branchAddress [31:0] $end
+$var wire 1 0 clk $end
+$var wire 32 5 jumpAddress [31:0] $end
+$var wire 1 2 rst $end
+$var wire 32 6 PC_Next [31:0] $end
+$var wire 32 7 PC [31:0] $end
+$var wire 32 8 Instruction [31:0] $end
+$var wire 32 9 Address [31:0] $end
+$var reg 32 : Inst [31:0] $end
+$var reg 32 ; NPC [31:0] $end
+$scope module Pcsrc_MUX $end
+$var wire 32 < in1 [31:0] $end
+$var wire 32 = in2 [31:0] $end
+$var wire 2 > sel [1:0] $end
+$var wire 32 ? in0 [31:0] $end
+$var reg 32 @ out [31:0] $end
+$upscope $end
+$scope module inst $end
+$var wire 1 2 rst $end
+$var wire 32 A instruction [31:0] $end
+$var wire 32 B address [31:0] $end
+$upscope $end
+$scope module pc4 $end
+$var wire 32 C PC_Next [31:0] $end
+$var wire 32 D PC [31:0] $end
+$upscope $end
+$scope module pc_mod $end
+$var wire 32 E address [31:0] $end
+$var wire 1 0 clk $end
+$var wire 1 2 rst $end
+$var reg 32 F PC [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx F
+bx E
+bx D
+bx C
+bx B
+b0 A
+bx @
+bx ?
+bx >
+bx =
+bx <
+b0 ;
+b0 :
+bx 9
+b0 8
+bx 7
+bx 6
+bx 5
+bx 4
+bx 3
+02
+bx 1
+00
+bx /
+bx .
+bx -
+b0 ,
+bx +
+bx *
+bz )
+bz (
+bz '
+bz &
+bz %
+bx $
+z#
+bz "
+bz !
+$end
+#50
+b100 +
+b100 6
+b100 ?
+b100 C
+b0 7
+b0 B
+b0 D
+b0 F
+10
+#100
+00
+#150
+10
+#200
+b1001000110100010101100111 ,
+b1001000110100010101100111 8
+b1001000110100010101100111 A
+b100 9
+b100 @
+b100 E
+b0 -
+b0 .
+b0 3
+b0 >
+12
+00
+#250
+b10001001101010111100110111101111 ,
+b10001001101010111100110111101111 8
+b10001001101010111100110111101111 A
+b1000 9
+b1000 @
+b1000 E
+b1000 +
+b1000 6
+b1000 ?
+b1000 C
+b100 7
+b100 B
+b100 D
+b100 F
+b1001000110100010101100111 :
+b100 ;
+10
+#300
+00
+#350
+bx ,
+bx 8
+bx A
+b1100 9
+b1100 @
+b1100 E
+b1100 +
+b1100 6
+b1100 ?
+b1100 C
+b1000 7
+b1000 B
+b1000 D
+b1000 F
+b10001001101010111100110111101111 :
+b1000 ;
+10
+#400
+00
+#450
+b10000 9
+b10000 @
+b10000 E
+b10000 +
+b10000 6
+b10000 ?
+b10000 C
+b1100 7
+b1100 B
+b1100 D
+b1100 F
+bx :
+b1100 ;
+10
+#500
+00
+#550
+b10100 9
+b10100 @
+b10100 E
+b10100 +
+b10100 6
+b10100 ?
+b10100 C
+b10000 7
+b10000 B
+b10000 D
+b10000 F
+b10000 ;
+10
+#600
+00
+#650
+b11000 9
+b11000 @
+b11000 E
+b11000 +
+b11000 6
+b11000 ?
+b11000 C
+b10100 7
+b10100 B
+b10100 D
+b10100 F
+b10100 ;
+10
+#700
+00

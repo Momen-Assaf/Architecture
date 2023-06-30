@@ -1,0 +1,3 @@
+iverilog -o out.vvp fetchCycleTB.v fetchCycle.v
+vvp out.vvp
+gtkwave dump.vcd
