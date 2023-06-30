@@ -2,9 +2,9 @@
 
 #ALUOP:
 
-Type | Instr| ALUOP\n
-00| AND| 0000\n
-00| ADD| 0001\n
+Type | Instr| ALUOP|
+00| AND| 0000|
+00| ADD| 0001|
 00| SUB| 0010 
 00| CMP| 0011 WITH FLAGS SET
 10| ANDI| 0100
