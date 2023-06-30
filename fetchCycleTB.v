@@ -1,3 +1,6 @@
+// iverilog -o out.vvp fetchCycleTB.v fetchCycle.v
+// vvp out.vvp
+// gtkwave dump.vcd
 module TB();
     reg clk = 1,rst;
     reg [1:0] PC_Src;

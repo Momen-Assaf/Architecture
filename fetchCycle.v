@@ -11,7 +11,7 @@ module fetchCycle(
     output [31:0] Instruction,
     output [31:0] PC_Next
     );
-    reg [31:0] NPC,Inst;//Pipeline registers
+    reg [31:0] NPC,Inst,PC_Reg;//Pipeline registers
 
     Mux3to1 Pcsrc_MUX(.in0(PC_Next), .in1(jumpAddress), .in2(branchAddress), .sel(PC_Src), .out(Address));
     PCModule pc_mod(.clk(clk),.rst(rst), .address(Address), .PC(PC));
@@ -23,10 +23,12 @@ module fetchCycle(
         if(rst == 1'b0) begin
             NPC <= 32'h00000000;
             Inst <= 32'h00000000;
+            PC_Reg <= 32'h00000000;
         end
         else begin
             NPC <= PC_Next;
             Inst <= Instruction;
+            PC_Reg <= PC;
         end
     end
     
