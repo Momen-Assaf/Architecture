@@ -2,9 +2,9 @@ module TB();
     reg clk = 1,rst;
     reg [1:0] PC_Src;
     reg [31:0] Address,jumpAddress,branchAddress;
-    wire [31:0] Instruction,PC_Next;
+    wire [31:0] Instruction,PC_Next , PC;
 
-    fetchCycle test(.clk(clk),.rst(rst), .PC_Src(PC_Src), .jumpAddress(jumpAddress), .branchAddress(branchAddress), .Instruction(Instruction), .PC_Next(PC_Next));
+    fetchCycle test(.clk(clk),.rst(rst), .PC_Src(PC_Src),.PC(PC), .jumpAddress(jumpAddress), .branchAddress(branchAddress), .Instruction(Instruction), .PC_Next(PC_Next));
 
     always begin
         clk = ~clk;
