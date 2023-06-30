@@ -75,3 +75,36 @@ module mainController(
 
 endmodule
 
+module ALUController(
+    input [4:0] op,
+    input [1:0] type,
+    output [3:0] ALUOp
+);
+    if(type == 2'b00) begin // R-Type
+      assign ALUOp =(op == 5'b00000) ?  4'b0000:
+                    (op == 5'b00001) ?  4'b0001:
+                    (op == 5'b00010) ?  4'b0010:
+                    (op == 5'b00011) ?  4'b0011:
+                                        4'b1111;
+
+    end else if (type = 2'b10)begin //I-Type
+      assign ALUOp =(op == 5'b00000) ?  4'b0100:
+                    (op == 5'b00001) ?  4'b0101:
+                    (op == 5'b00010) ?  4'b0110:
+                    (op == 5'b00011) ?  4'b0111:
+                    (op == 5'b00100) ?  4'b1000:
+                                        4'b1111;
+
+    end else if(type = 2'b01 )begin // J-Type
+      assign ALUOp =(op == 5'b00000) ?  4'b1001:
+                    (op == 5'b00001) ?  4'b1010:
+                                        4'b1111;
+
+    end else if (type = 2'b11)begin //S-Type
+      assign ALUOp =(op == 5'b00000) ?  4'b1011:
+                    (op == 5'b00001) ?  4'b1100:
+                    (op == 5'b00010) ?  4'b1101:
+                    (op == 5'b00011) ?  4'b1110:
+                                        4'b1111;
+    end
+endmodule
