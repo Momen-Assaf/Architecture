@@ -6,7 +6,7 @@ module decodeCylce(
     input [31:0] Instruction,
     input [31:0] PC_Next,
     input [31:0] PC_Reg,
-    
+
 );
 endmodule
 
@@ -57,5 +57,21 @@ module instructionDecoder(
     end
     stop = instruction[31];
   end
+endmodule
+
+module mainController(
+    input [4:0] op,
+    input [1:0] type,
+    output extOp,
+    output ALUSrc,
+    output regWrite,
+    output memRead,
+    output memWrite,
+    output aluOp,
+    output jump,
+    output [1:0] pcSrc
+);
+    always @()
+
 endmodule
 
