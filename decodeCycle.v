@@ -26,52 +26,59 @@ module instructionDecoder(
 
   always @(instruction) begin
 
+    opcode = instruction[4:0];
+    stop = instruction[31];
     if(type == 2'b00) begin // R-Type
-
-      opcode = instruction[4:0];
       rs1 = instruction[9:5];
       rd = instruction[14:10];
       rs2 = instruction[19:15];
       //usused = instruction[28:20]
 
     end else if(type = 2'b01 )begin // J-Type
-
-      opcode = instruction[4:0];
       signedimmediate = instruction[28:5]
 
     end else if (type = 2'b10)begin //I-Type
-
-      opcode = instruction[4:0];
       rs1 = instruction[9:5];
       rd = instruction[14:10];
       immediate = instruction [28:15];
 
     end else if (type = 2'b11)begin //S-Type
-
-      opcode = instruction[4:0];
       rs1 = instruction[9:5];
       rd = instruction[14:10];
       rs2 = instruction[19:15];
       SA = instruction[24:20];
       //usused = instruction[28:25]
     end
-    stop = instruction[31];
   end
+endmodule
+
+
+module jumpConcat(
+  input [23:0] address,
+  input [31:0] PC,
+  output [31:0] jumpAddress
+);
+  assign jumpAddress = {PC[31:24],address};
+
 endmodule
 
 module mainController(
     input [4:0] op,
     input [1:0] type,
     output extOp,
-    output ALUSrc,
+    output [1:0] ALUSrc,
     output regWrite,
     output memRead,
     output memWrite,
-    output aluOp,
-    output jump,
     output [1:0] pcSrc
 );
-    always @()
+    assign pcSrc =  (type == 2'b01) ? 2'b10:
+                    ((type == 2'b10) && (op == 5'b00100)) ? 2'b11:
+                                      2'b01;
+    assign ALUSrc = (type == 2'b01) ? 2'b00:
+                    (type == 2'b10) ? 2'b01:
+                    ((type == 2'11) && (op == 5'b00010 ||op == 5'b00011)) ? 2'b00:
+                                    2'b10;
 
 endmodule
 

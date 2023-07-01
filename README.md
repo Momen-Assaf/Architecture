@@ -1,7 +1,8 @@
 #Pipeline Processer
 
-#ALUOP:
+#Control Signals
 
+#ALUOP:
 Type | Instr| ALUOP|
 00| AND| 0000|
 00| ADD| 0001|
