@@ -19,3 +19,13 @@ Type | Instr| ALUOP|
 11| SLRV| 1110
 
 #Control Signals
+OP	PC_src	ExtOp	ALUSrc	Mem_W	Mem_R	WB	RegW
+R-Type	0	X	0	0	0	0	1
+ANDI	0	0	1	0	0	0	1
+ADDI	0	1	1	0	0	0	1
+LW	0	1	1	0	1	1	1
+SW	0	1	1	1	0	X	0
+BEQ	0 or 2	X	0	0	0	X	0
+J	1	X	X	0	0	X	0
+JAL	1	X	X	0	0	X	0
+S-Type	0	X	2	0	0	0	1
