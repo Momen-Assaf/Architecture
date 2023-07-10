@@ -96,6 +96,22 @@ module jumpConcat(
 
 endmodule
 
+module ExtendSA(
+    input [4:0] SA,
+    output [31:0] SA_EX
+);
+    assign SA_EX = {{27{1'b0}}, SA};
+endmodule
+
+module ExtendImmediate(
+    input [13:0] imm,
+    input ExtOp,
+    output [31:0] extended_imm
+);
+    assign extended_imm = (ExtOp == 1'b1) ? {{18{imm[13]}}, imm} : {18'b0, imm};
+endmodule
+
+
 module controlUnit(
     input [4:0] op,
     input [1:0] type,
