@@ -1,7 +1,5 @@
 #Pipeline Processer
 
-#Control Signals
-
 #ALUOP:
 Type | Instr| ALUOP|
 00| AND| 0000|
@@ -19,3 +17,5 @@ Type | Instr| ALUOP|
 11| SLR| 1100
 11| SLLV| 1101
 11| SLRV| 1110
+
+#Control Signals
