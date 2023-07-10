@@ -204,6 +204,55 @@ endmodule
 //     end
 // endmodule
 
+
+// module instructionDecoder(
+//   input [31:0] instruction,
+//   output [4:0] opcode,
+//   output [4:0] rs1,
+//   output [4:0] rs2,
+//   output [4:0] rd,
+//   output [13:0] immediate,
+//   output [1:0] type,
+//   output stop,
+//   output [23:0] signedimmediate,
+//   output [4:0] SA
+// );
+//   reg [1:0] type;
+  
+//   always @(instruction) begin
+//     opcode = instruction[4:0];
+//     stop = instruction[31];
+    
+//     case (instruction[30:29])
+//       2'b00: begin // R-Type
+//         type = 2'b00;
+//         rs1 = instruction[9:5];
+//         rd = instruction[14:10];
+//         rs2 = instruction[19:15];
+//         // unused = instruction[28:20]
+//       end
+//       2'b01: begin // J-Type
+//         type = 2'b01;
+//         signedimmediate = instruction[28:5];
+//       end
+//       2'b10: begin // I-Type
+//         type = 2'b10;
+//         rs1 = instruction[9:5];
+//         rd = instruction[14:10];
+//         immediate = instruction[28:15];
+//       end
+//       2'b11: begin // S-Type
+//         type = 2'b11;
+//         rs1 = instruction[9:5];
+//         rd = instruction[14:10];
+//         rs2 = instruction[19:15];
+//         SA = instruction[24:20];
+//         // unused = instruction[28:25]
+//       end
+//     endcase
+//   end
+// endmodule
+
   // Implement memory read and write operations
 
 

@@ -1,12 +1,5 @@
-module ALU_Unit(
-    input [31:0] op1,
-    input [31:0] op1,
-    input [3:0] ALUOp,
-    output zero,
-    output overflow,
-    output negative,
-    output [31:0] ALURes
-);
+`include "components.v"
+
 module ALU (
   input [3:0] ALUOp,
   input [31:0] operandA,

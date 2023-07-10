@@ -1,63 +1,127 @@
-`include "components.v"
-
 module decodeCylce(
     input clk,
     input rst,
     input [31:0] Instruction,
-    input [31:0] PC_Next,
-    input [31:0] PC_Reg,
-
+    input [31:0] PC,
+    input [31:0] DataW,
+    output [31:0] PC_out,
+    output [31:0] ExImm,
+    output [31:0] Op1,
+    output [31:0] Op2,
+    output [31:0] ExSA,
+    output [4:0] Rd,
+    output [1:0] ALUSrc,
+    output [3:0] ALUOp,
+    output mem_R,
+    output mem_W,
+    output WB,
+    output RegW,
+    output [1:0] PC_Src,
+    output [31:0] jumpAddress
 );
-endmodule
+  wire [13:0] immediate;
+  wire [23:0] signedimmediate;
+  wire [4:0] opcode, Rs1, Rs2, SA;
+  wire [1:0] type;
+  wire stop;
 
+  wire extOp;
+
+  reg [31:0] PC_Reg, ExImm_Reg, Op1_Reg, Op2_Reg, ExSA_Reg;
+  reg [4:0] Rd1;
+  reg [3:0] ALUOp_Reg;
+  reg [1:0] Pc_Src_Reg,ALUSrc_Reg;
+  reg mem_R_Reg, mem_W_Reg, WB_Reg, RegW_Reg;
+
+  assign PC_out = PC;
+
+  instructionDecoder id(.instruction(Instruction),.opcode(opcode),.rs1(Rs1),.rs2(Rs2),.rd(Rd),.immediate(immediate),.type(type),.stop(stop),.signedimmediate(signedimmediate),.SA(SA));
+  controlUnit CU(.op(opcode),.type(type),.extOp(extOp),.ALUSrc(ALUSrc),.regW(RegW),.mem_R(mem_R),.mem_W(mem_W),.WB(WB),.pcSrc(PC_Src),.ALUOp(ALUOP));
+  RegisterFile rf(.clk(clk),.rst(rst),.Rs1(Rs1),.Rs2(Rs2),.Rd(Rd),.RegW(RegW),.DataW(DataW),.Op1(Op1),.Op2(Op2));
+  jumpConcat jC(.address(signedimmediate),.PC(PC),.jumpAddress(jumpAddress));
+  ExtendImmediate eI(.imm(immediate),.ExtOp(extOp),.extended_imm(ExImm));
+  ExtendSA eS(.SA(SA),.SA_EX(ExSA));
+
+  always @(posedge clk or negedge rst) begin
+      if(rst == 1'b0) begin
+        PC_Reg <= 32'h00000000;
+        ExImm_Reg <= 32'h00000000;
+        Op1_Reg <= 32'h00000000;
+        Op2_Reg <= 32'h00000000;
+        ExSA_Reg <= 32'h00000000;
+        Rd1 <= 5'b00000;
+        ALUSrc_Reg <= 2'b00;
+        ALUOp_Reg <= 4'b0000;
+        mem_R_Reg <= 1'b0;
+        mem_W_Reg <= 1'b0;
+        WB_Reg <= 1'b0;
+        RegW_Reg <= 1'b0;
+        Pc_Src_Reg <= 2'b00;
+      end
+      else begin
+        PC_Reg <= PC_out;
+        ExImm_Reg <= ExImm;
+        Op1_Reg <= Op1;
+        Op2_Reg <= Op2;
+        ExSA_Reg <= ExSA;
+        Rd1 <= Rd;
+        ALUSrc_Reg <= ALUSrc;
+        ALUOp_Reg <= ALUOP;
+        mem_R_Reg <= mem_R;
+        mem_W_Reg <= mem_W;
+        WB_Reg <= WB;
+        RegW_Reg <= RegW;
+        Pc_Src_Reg <= PC_Src;
+      end
+  end 
+
+endmodule
 
 module instructionDecoder(
   input [31:0] instruction,
-  output [4:0] opcode,
-  output [4:0] rs1,
-  output [4:0] rs2,
-  output [4:0] rd,
-  output [13:0] immediate,
-  output [1:0] type,
-  output stop,
-  output [23:0] signedimmediate,
-  output [4:0] SA
+  output reg [4:0] opcode,
+  output reg [4:0] rs1,
+  output reg [4:0] rs2,
+  output reg [4:0] rd,
+  output reg [13:0] immediate,
+  output reg [1:0] type,
+  output reg stop,
+  output reg [23:0] signedimmediate,
+  output reg [4:0] SA
 );
-  reg [1:0] type;
-  
-  always @(instruction) begin
+  always @* begin
     opcode = instruction[4:0];
     stop = instruction[31];
     
     case (instruction[30:29])
       2'b00: begin // R-Type
         type = 2'b00;
-        rs1 = instruction[9:5];
-        rd = instruction[14:10];
-        rs2 = instruction[19:15];
-        // unused = instruction[28:20]
+        rs1 = instruction[19:15];
+        rs2 = instruction[24:20];
+        rd = instruction[11:7];
+        // unused = instruction[6:0]
       end
       2'b01: begin // J-Type
         type = 2'b01;
-        signedimmediate = instruction[28:5];
+        signedimmediate = {instruction[28], instruction[25:0], 2'b00};
       end
       2'b10: begin // I-Type
         type = 2'b10;
-        rs1 = instruction[9:5];
-        rd = instruction[14:10];
-        immediate = instruction[28:15];
+        rs1 = instruction[19:15];
+        rd = instruction[24:20];
+        immediate = instruction[24:9];
       end
       2'b11: begin // S-Type
         type = 2'b11;
-        rs1 = instruction[9:5];
-        rd = instruction[14:10];
-        rs2 = instruction[19:15];
-        SA = instruction[24:20];
-        // unused = instruction[28:25]
+        rs1 = instruction[19:15];
+        rs2 = instruction[24:20];
+        SA = instruction[11:7];
+        // unused = instruction[6:0]
       end
     endcase
   end
 endmodule
+
 
 module RegisterFile(
   input clk,
