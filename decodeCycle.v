@@ -1,4 +1,4 @@
-module decodeCylce(
+module decodeCycle(
     input clk,
     input rst,
     input [31:0] Instruction,
@@ -36,7 +36,7 @@ module decodeCylce(
   assign PC_out = PC;
 
   instructionDecoder id(.instruction(Instruction),.opcode(opcode),.rs1(Rs1),.rs2(Rs2),.rd(Rd),.immediate(immediate),.type(type),.stop(stop),.signedimmediate(signedimmediate),.SA(SA));
-  controlUnit CU(.op(opcode),.type(type),.extOp(extOp),.ALUSrc(ALUSrc),.regW(RegW),.mem_R(mem_R),.mem_W(mem_W),.WB(WB),.pcSrc(PC_Src),.ALUOp(ALUOP));
+  controlUnit CU(.op(opcode),.type(type),.extOp(extOp),.ALUSrc(ALUSrc),.regW(RegW),.mem_R(mem_R),.mem_W(mem_W),.WB(WB),.pcSrc(PC_Src),.ALUOp(ALUOp));
   RegisterFile rf(.clk(clk),.rst(rst),.Rs1(Rs1),.Rs2(Rs2),.Rd(Rd),.RegW(RegW),.DataW(DataW),.Op1(Op1),.Op2(Op2));
   jumpConcat jC(.address(signedimmediate),.PC(PC),.jumpAddress(jumpAddress));
   ExtendImmediate eI(.imm(immediate),.ExtOp(extOp),.extended_imm(ExImm));
@@ -66,7 +66,7 @@ module decodeCylce(
         ExSA_Reg <= ExSA;
         Rd1 <= Rd;
         ALUSrc_Reg <= ALUSrc;
-        ALUOp_Reg <= ALUOP;
+        ALUOp_Reg <= ALUOp;
         mem_R_Reg <= mem_R;
         mem_W_Reg <= mem_W;
         WB_Reg <= WB;
@@ -147,7 +147,7 @@ module RegisterFile(
   assign Op2 = (rst == 1'b0) ? 32'b0 : Register[Rs2];
 
   initial begin 
-      Register[0] = 32'h00000000;
+      Register[0] = 32'h00000011;
   end
 endmodule
 
@@ -211,10 +211,10 @@ module mainController(
     
     assign extOp = ((type == 2'b10) && ((op == 5'b00001) ||(op == 5'b00010) || (op == 5'b00011))) ? 1'b1:
                                       1'b0;
-    assign ALUSrc = (type == 2'b01) ? 2'b00:
+    assign ALUSrc = (type == 2'b00) ? 2'b00:
                     (type == 2'b10) ? 2'b01:
-                    ((type == 2'b11) && ((op == 5'b00010) || (op == 5'b00011))) ? 2'b00:
-                                    2'b10;
+                    ((type == 2'b11) && ((op == 5'b00010) || (op == 5'b00011))) ? 2'b10:
+                                    2'b11;
     assign mem_W = ((type == 2'b10) && (op == 5'b00011)) ? 1'b1:
                                     1'b0;
     assign mem_R = ((type == 2'b10) && (op == 5'b00010)) ? 1'b1:
