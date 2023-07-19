@@ -5,12 +5,14 @@ module pipeLine_tb;
   reg rst;
 
   // Outputs
+  wire [31:0] ALU_Res;
   wire [31:0] WB_Data_out;
 
   // Instantiate the module under test
   pipeLine pipeLineTB (
     .clk(clk),
     .rst(rst),
+    .ALU_Res(ALU_Res),
     .WB_Data_out(WB_Data_out)
   );
 

@@ -61,6 +61,7 @@ module DataMemomry(
 
     initial begin
         mem[0] = 32'h00000000;
+
     end
 
 endmodule

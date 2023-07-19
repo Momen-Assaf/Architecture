@@ -1,5 +1,4 @@
 
-
 module fetchCycle(
     input clk,
     input rst,

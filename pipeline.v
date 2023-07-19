@@ -7,10 +7,11 @@
 module pipeLine(
     input clk,
     input rst,
+    output [31:0] ALU_Res,
     output [31:0] WB_Data_out
 );
 
-    wire [31:0]PC, address, jumpAddress,branchAddress, instruction, PC_next, DataW , ExImm, Op1, Op2, ExSA, ALU_Res, PC_D, WB_Data;
+    wire [31:0]PC, address, jumpAddress,branchAddress, instruction, PC_next, DataW , ExImm, Op1, Op2, ExSA, PC_D, WB_Data;
     wire [4:0] Rd;
     wire [3:0] ALUOp;
     wire mem_R, mem_W, WB, RegW;
