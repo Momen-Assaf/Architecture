@@ -1,4 +1,4 @@
-`include "components.v"
+
 
 module fetchCycle(
     input clk,
@@ -13,7 +13,7 @@ module fetchCycle(
     );
     reg [31:0] Inst,PC_Reg;//Pipeline registers
 
-    Mux3to1 Pcsrc_MUX(.in0(PC_Next), .in1(jumpAddress), .in2(branchAddress), .sel(PC_Src), .out(Address));
+    Muxm3to1 Pcsrc_MUX(.in0(PC_Next), .in1(jumpAddress), .in2(branchAddress), .sel(PC_Src), .out(Address));
     PCModule pc_mod(.clk(clk),.rst(rst), .address(Address), .PC(PC));
     InstructionMemory inst(.rst(rst),.address(PC),.instruction(Instruction));
     PC_Adder pc4(.PC(PC), .PC_Next(PC_Next));
@@ -75,3 +75,19 @@ module InstructionMemory (
   end
 
 endmodule 
+
+module Muxm3to1 (
+    input [31:0] in0,
+    input [31:0] in1,
+    input [31:0] in2,
+    input [1:0] sel,
+    output reg [31:0] out
+  );
+  always @* begin
+    case(sel)
+      2'b00: out = in0;
+      2'b01: out = in1;
+      2'b10: out = in2;
+    endcase
+  end
+endmodule
