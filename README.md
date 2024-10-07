@@ -1,31 +1,39 @@
-#Pipeline Processer
+# Pipeline Processor
 
-#ALUOP:
-Type | Instr| ALUOP|
-00| AND| 0000|
-00| ADD| 0001|
-00| SUB| 0010 
-00| CMP| 0011 WITH FLAGS SET
-10| ANDI| 0100
-10| ADDI| 0101
-10| LW| 0110
-10| SW| 0111
-10| BEQ| 1000
-01| J| 1001
-01| JAL| 1010
-11| SLL| 1011
-11| SLR| 1100
-11| SLLV| 1101
-11| SLRV| 1110
+## ALU Operations (ALUOP)
 
-#Control Signals
-OP	PC_src	ExtOp	ALUSrc	Mem_W	Mem_R	WB	RegW
-R-Type	0	X	0	0	0	0	1
-ANDI	0	0	1	0	0	0	1
-ADDI	0	1	1	0	0	0	1
-LW	0	1	1	0	1	1	1
-SW	0	1	1	1	0	X	0
-BEQ	0 or 2	X	0	0	0	X	0
-J	1	X	X	0	0	X	0
-JAL	1	X	X	0	0	X	0
-S-Type	0	X	2	0	0	0	1
+| Type | Instruction | ALUOP |
+|------|-------------|-------|
+| 00   | AND         | 0000  |
+| 00   | ADD         | 0001  |
+| 00   | SUB         | 0010  |
+| 00   | CMP         | 0011 (WITH FLAGS SET) |
+| 10   | ANDI       | 0100  |
+| 10   | ADDI       | 0101  |
+| 10   | LW         | 0110  |
+| 10   | SW         | 0111  |
+| 10   | BEQ        | 1000  |
+| 01   | J          | 1001  |
+| 01   | JAL        | 1010  |
+| 11   | SLL        | 1011  |
+| 11   | SLR        | 1100  |
+| 11   | SLLV       | 1101  |
+| 11   | SLRV       | 1110  |
+
+## Control Signals
+
+| Operation | PC_src | ExtOp | ALUSrc | Mem_W | Mem_R | WB | RegW |
+|-----------|--------|-------|--------|-------|-------|----|------|
+| R-Type    | 0      | X     | 0      | 0     | 0     | 1  | 1    |
+| ANDI      | 0      | 0     | 1      | 0     | 0     | 0  | 1    |
+| ADDI      | 0      | 1     | 1      | 0     | 0     | 0  | 1    |
+| LW        | 0      | 1     | 1      | 0     | 1     | 1  | 1    |
+| SW        | 0      | 1     | 1      | 1     | 0     | X  | 0    |
+| BEQ       | 0 or 2 | X     | 0      | 0     | X     | 0  | 0    |
+| J         | 1      | X     | X      | 0     | 0     | X  | 0    |
+| JAL       | 1      | X     | X      | 0     | 0     | X  | 0    |
+| S-Type    | 0      | X     | 2      | 0     | 0     | 0  | 1    |
+
+## Data Path
+
+![Data Path](https://github.com/user-attachments/assets/42182fe9-3e53-4279-aa84-455c51ff1ca9)
