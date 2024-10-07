@@ -1,5 +1,9 @@
 # Pipeline Processor
 
+## Data Path
+
+![Data Path](https://github.com/user-attachments/assets/42182fe9-3e53-4279-aa84-455c51ff1ca9)
+
 ## ALU Operations (ALUOP)
 
 | Type | Instruction | ALUOP |
@@ -34,6 +38,3 @@
 | JAL       | 1      | X     | X      | 0     | 0     | X  | 0    |
 | S-Type    | 0      | X     | 2      | 0     | 0     | 0  | 1    |
 
-## Data Path
-
-![Data Path](https://github.com/user-attachments/assets/42182fe9-3e53-4279-aa84-455c51ff1ca9)
